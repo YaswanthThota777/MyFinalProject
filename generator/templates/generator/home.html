@@ -1,0 +1,63 @@
+{% extends 'generator/layout.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% load static %}
+
+{% block header_title %}Welcome to the Music Generator{% endblock %}
+
+{% block content %}
+<div class="center-content">
+    <h2 class="rainbow-text">Your Ultimate AI Music Assistant</h2>
+    <p style="font-size:25px;">Effortlessly Compose Unique Tracks</p>
+    <div class="text-animation-container">
+        <div class="text-animation">
+            <div class="sentence">Discover new sounds</div>
+            <div class="sentence">Share them with the world</div>
+            <div class="sentence">Monetize your creations</div>
+        </div>
+    </div>       
+</div>
+   
+<div class="center-button">
+    <a href="{% url 'generate_music' %}" class="btn btn-glow">
+        <i class="fas fa-music"></i> Start Creating
+    </a>
+</div>
+
+
+    <div class="image-section">
+        <img src="{% static 'styles/pexels-pixabay-257904.jpg' %}" alt="Hero Image" class="hero-image">
+        <div class="image-text">
+            <h3>AI-Powered Music at Your Fingertips</h3>
+            <p>Generate and refine tracks with unparalleled ease. Let your creativity flow.</p>
+        </div>
+    </div>
+
+    <div class="image-gallery">
+        <div class="gallery-item">
+            <img src="{% static 'styles/darius-F8E2tks5N04-unsplash.jpg' %}" alt="Music Creation" class="gallery-image">
+            <div class="features">
+                <h4>What You Get</h4>
+                <ul>
+                    <li>Instant Music Creation</li>
+                    <li>Preview and Adjust in Real-Time</li>
+                    <li>Emotionally Tuned Compositions</li>
+                    <li>Professional-Grade Audio Quality</li>
+                </ul>
+            </div>
+        </div>
+        <div class="gallery-item">
+            <img src="{% static 'styles/marcela-laskoski-YrtFlrLo2DQ-unsplash.jpg' %}" alt="Music Exploration" class="gallery-image">
+            <div class="features">
+                <h4>Explore More</h4>
+                <ul>
+                    <li>User-Friendly Interface</li>
+                    <li>Seamless Download & Sharing</li>
+                    <li>Endless Music Exploration</li>
+                    <li>Customizable Generation Options</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,98 @@
+{% extends 'generator/layout.html' %}
+
+{% block title %}Generate Music{% endblock %}
+
+{% block header_title %}Generate Your Music{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h2 class="page-heading">Generate Your Music</h2>
+        
+        <div class="form-container">
+            <form method="post" action="{% url 'generate_music' %}" class="generate-form">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="regenerate">Do you want to generate new music?</label>
+                    <select id="regenerate" name="regenerate" class="form-control">
+                        <option value="yes">Yes</option>
+                        <option value="no">No</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="genre">Select Genre:</label>
+                    <div class="genre-selector">
+                        <button type="button" data-genre="classical" class="genre-button" onclick="selectButton(this)">Classical</button>
+                        <button type="button" data-genre="jazz" class="genre-button" onclick="selectButton(this)">Jazz</button>
+                        <button type="button" data-genre="rock" class="genre-button" onclick="selectButton(this)">Rock</button>
+                        <button type="button" data-genre="electronic" class="genre-button" onclick="selectButton(this)">Electronic</button>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="tempo">Tempo (BPM):</label>
+                    <input type="range" id="tempo" name="tempo" min="60" max="180" value="120" class="slider">
+                </div>
+
+                <div class="form-group">
+                    <label for="instruments">Select Instruments:</label>
+                    <form method="POST">
+                        {% csrf_token %}
+                        <label for="instrument">Select Instrument:</label>
+                        <select name="instrument" id="instrument">
+                            <option value="piano">Piano</option>
+                        </select>
+                        <button type="submit" name="regenerate" value="yes">Generate Music</button>
+                    </form>                    
+                </div>
+
+                <div class="form-group">
+                    <label for="effects">Apply Effects:</label>
+                    <div class="effects-controls">
+                        <label for="reverb">Reverb:</label>
+                        <input type="range" id="reverb" name="reverb" min="0" max="100" value="50" class="slider">
+                        <label for="delay">Delay:</label>
+                        <input type="range" id="delay" name="delay" min="0" max="100" value="50" class="slider">
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn btn-glow">
+                    <i class="fas fa-music"></i> Generate Music
+                </button>
+            </form>
+        </div>
+
+        {% if audio_file %}
+            <div class="audio-player-section">
+                <h2>Generated Music</h2>
+                <audio id="audio-player" controls>
+                    <source src="{{ audio_file }}" type="audio/wav">
+                    Your browser does not support the audio element.
+                </audio>
+                <a href="{{ audio_file }}" download="generated_music.wav" class="btn btn-download">
+                    <i class="fas fa-download"></i> Download Music
+                </a>
+                <div class="music-metadata">
+                    <h2>Music Metadata</h2>
+                    <p>Duration: <span id="music-duration">--:--</span></p>
+                    <p>Genre: {{ genre }}</p>
+                    <p>Tempo: {{ tempo }} BPM</p>
+                </div>
+                <div class="share-options">
+                    <h2>Share Your Music</h2>
+                    <a href="https://twitter.com/intent/tweet?text=Check out my generated music!&url={{ audio_file }}" target="_blank">
+                        <i class="fab fa-twitter"></i> Share on Twitter
+                    </a>
+                    <a href="https://www.facebook.com/sharer/sharer.php?u={{ audio_file }}" target="_blank">
+                        <i class="fab fa-facebook-f"></i> Share on Facebook
+                    </a>
+                </div>
+            </div>
+        {% elif error %}
+            <div class="alert alert-danger">{{ error }}</div>
+        {% elif message %}
+            <div class="alert alert-info">{{ message }}</div>
+        {% endif %}
+   
+
+{% endblock %}

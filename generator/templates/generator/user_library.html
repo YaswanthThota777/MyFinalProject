@@ -1,0 +1,13 @@
+{% extends 'generator/layout.html' %}
+
+{% block content %}
+<h2>Your Music Library</h2>
+<ul>
+    {% for music in music_files %}
+        <li>
+            <a href="{{ music.wav_file.url }}" target="_blank">{{ music.created_at }} - Download WAV</a>
+            <a href="{{ music.midi_file.url }}" target="_blank">Download MIDI</a>
+        </li>
+    {% endfor %}
+</ul>
+{% endblock %}
